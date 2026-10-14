@@ -1,0 +1,45 @@
+# Unity generated folders
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+[Mm]emoryCaptures/
+[Rr]ecordings/
+
+# Asset import and build caches
+[Aa]ssets/[Tt]exture[Aa]rrays/
+[Aa]ssets/[Gg]enerated[Tt]extures/
+[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
+
+# Auto-generated IDE/project files
+.vs/
+.vscode/
+.idea/
+*.csproj
+*.unityproj
+*.sln
+*.slnx
+*.pidb
+*.booproj
+*.svd
+*.userprefs
+*.user
+*.userosscache
+*.suo
+*.tmp
+
+# Crash reports and diagnostics
+sysinfo.txt
+*.stacktrace.txt
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# JetBrains Rider
+*.sln.iml
+
