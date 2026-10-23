@@ -11,8 +11,8 @@ MonoImporter:
   assetBundleVariant: 
 AssetOrigin:
   serializedVersion: 1
-  productId: 372864
-  packageName: Get Started with Shader Graph | Complete Project
-  packageVersion: 1.1
+  productId: 196526
+  packageName: First Person + Third Person | Character Controllers
+  packageVersion: 2.0.1
   assetPath: Assets/_GetStartedWithShaderGraph/Extra Resources/FirstPersonController/Common/BasicRigidBodyPush.cs
-  uploadId: 901268
+  uploadId: 998422
