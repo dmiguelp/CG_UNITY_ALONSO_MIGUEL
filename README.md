@@ -1,9 +1,17 @@
 # CG_UNITY_ALONSO_MIGUEL
 
+
+Observa y explora La Cantera y el puente de Álcantara en un vasto mundo lleno de vegetación. Controlas a un personaje en tercera persona con el que podrás observar a otra gente deambulando por el paisaje. AParca tu coche en la zona de parking o ve directamente a La Cantera y comienza a explorar!
+
 Proyecto de Unity para la construcción de un entorno 3D explorable con estética
-low-poly. El escenario combina la zona natural de **La Cantera**, una piscina
+low-poly combinado con assets de más alta definición. El escenario combina la zona natural de **La Cantera**, una piscina
 natural, el **Puente de Alcántara**, una zona de parking y una zona elevada con
-vegetación, mobiliario, vehículos y personajes controlados por navegación.
+vegetación, vehículos, un personaje jugable con cámara en tercera persona al hombro y NPCs controlados por IA (navegación autónoma por destinos aleatorios).
+
+
+![Localización de la escena](media/Captura%20de%20pantalla%202026-11-04%20131957.png)
+
+Localización de la escena.
 
 > **Estado documentado:** 4 de noviembre de 2026. Este documento describe lo
 > que está serializado en el repositorio, no una funcionalidad hipotética o
@@ -77,25 +85,13 @@ duplicados de una misma familia de prefab.
 | `Terrain` | Terreno principal, `Terrain` y `TerrainCollider`; usa datos de terreno y árboles/detalles |
 | `Directional Light` | Luz direccional principal; intensidad 5.3 y sombras |
 | `Global Volume` | Volumen global URP con el perfil `DefaultVolumeProfile` |
-| `VisualScripting SceneVariables` | Variables de escena de Unity Visual Scripting |
-| `New Script Graph` | `ScriptMachine` de Visual Scripting |
 | `NavMeshZone` | `NavMeshSurface` para la zona general de navegación |
 | `NavMeshZone_parking` | `NavMeshSurface` para la zona del parking |
 | `RoamCenter` | Punto de referencia para el movimiento aleatorio de NPCs |
 | `RoamCenter_parking` | Punto de referencia de movimiento del parking |
-| `DestinoNPC` | Punto preparado como destino explícito de NPC |
-| `Plane` | Plano auxiliar de la escena |
-| `Sphere` | Esfera con `Rigidbody` y `SphereCollider` |
-| `Cube (2)` | Cubo de la escena, con `MeshRenderer` y `BoxCollider` |
-| `Cube (3)` | Cubo de la escena, con `MeshRenderer` y `BoxCollider` |
-| `Cube (4)` | Cubo de la escena, con `MeshRenderer` y `BoxCollider` |
-| `Cube (5)` | Cubo de la escena, con `MeshRenderer` y `BoxCollider` |
-| `Cube (6)` | Cubo de la escena, con `MeshRenderer` y `BoxCollider` |
-| `Cube (7)` | Cubo de la escena, con `MeshRenderer` y `BoxCollider` |
-| `Cube (8)` | Cubo de la escena, con `MeshRenderer` y `BoxCollider` |
+| `DestinoNPC` | Punto preparado como destino explícito de NPC (auxiliar no utilizado en la escena) |
 
-Los cubos se usan como geometría auxiliar o elementos de prueba. `Sphere`
-conserva física dinámica y gravedad activada.
+
 
 ### Instancias de prefabs de la escena
 
@@ -171,9 +167,7 @@ El personaje principal procede de Mixamo y se organiza en:
 - `Assets/Scenes/_MisCosas/Prefabs/PlayerArmature (1).prefab`
 
 El avatar incluye jerarquía humanoide, huesos Mixamo, geometría corporal,
-ropa, pelo, ojos y zapatos. Sus texturas se encuentran en
-`Assets/Scenes/_MisCosas/Personajes/jugadorUnoTexturas/` e incluyen mapas
-diffuse, normal, gloss, specular y opacity para las distintas partes.
+ropa, pelo, ojos y zapatos.
 
 La cámara de seguimiento está representada por `PlayerFollowCamera` y el
 `PlayerArmature` contiene el `PlayerCameraRoot` utilizado por el controlador de
@@ -185,29 +179,8 @@ tercera persona.
 
 Script de comportamiento autónomo de NPC descrito en la sección de navegación.
 Usa `UnityEngine.AI`, valida dependencias y comunica errores mediante
-`Debug.LogError`.
+`Debug.LogError`. Los NPCs reutilizan animaciones del avatar Remy.
 
-### `NewMonoBehaviourScript.cs`
-
-Componente de prueba utilizado sobre un objeto de la escena. Rota el objeto
-continuamente alrededor de los ejes X, Y y Z:
-
-```text
-rotationSpeed = 100
-```
-
-La rotación se ejecuta en `Update` y está multiplicada por
-`Time.deltaTime`.
-
-### `NewEmptyCSharpScript.cs`
-
-Clase vacía creada como plantilla. No hereda de `MonoBehaviour` y no tiene
-comportamiento conectado a la escena.
-
-### `primer_script.cs`
-
-Archivo vacío reservado para pruebas iniciales; actualmente no aporta
-comportamiento.
 
 ## Prefabs propios y materiales
 
@@ -222,28 +195,23 @@ función:
 | `Prefabs/bridge_01_piece_04.prefab` | Pieza de puente reutilizable |
 | `Prefabs/bridge_01_piece_04 (1).prefab` | Variante duplicada de la pieza |
 | `Cube.prefab` | Prefab auxiliar con cubo y componentes físicos |
-| `Materials/Rojo.mat` | Material propio de color rojo |
-| `VisualScripting/` | Recursos asociados a grafos visuales |
+
 
 ## Input System
 
 El proyecto utiliza el paquete nuevo **Input System** y el asset
-`Assets/InputSystem_Actions.inputactions`. El mapa de acciones `Player`
+`Assets/InputSystem_Actions.inputactions`. El mapa de acciones del jugador
 contiene:
 
-| Acción | Tipo | Uso |
-| --- | --- | --- |
-| `Move` | Vector2 | Movimiento |
-| `Look` | Vector2 | Cámara/mirada |
-| `Attack` | Button | Acción de ataque |
-| `Interact` | Button, Hold | Interacción mantenida |
-| `Crouch` | Button | Agacharse |
-| `Jump` | Button | Salto |
-| `Previous` / `Next` | Button | Navegación entre opciones |
-| `Sprint` | Button | Carrera |
+| Acción | Teclado 
+| --- | --- 
+| `Moverse` | WASD / flechas 
+| `Mirar` | Ratón | 
+| `Saltar` | Espacio | 
+| `Correr` | Shift
 
-`Move` tiene bindings para stick izquierdo de gamepad, WASD y flechas. El
-archivo también conserva bindings para gamepad, teclado/ratón y XR.
+
+`Moverse` tiene bindings para mando, WASD y flechas.
 
 ## Renderizado, iluminación y ambiente
 
@@ -252,6 +220,7 @@ archivo también conserva bindings para gamepad, teclado/ratón y XR.
 - Paquete URP: **17.6.0**.
 - Skybox configurado en `SampleScene`.
 - Fog activada con densidad `0.01` y distancia lineal hasta `300`.
+- Gamma del skybox modificado para dar una sensación cálida de atardecer.
 - Luz direccional con sombras.
 - `Global Volume` activo y perfil global URP.
 - Materiales de agua procedentes de `IgniteCoders/Simple Water Shader`.
@@ -272,9 +241,9 @@ El `Packages/manifest.json` incluye, entre otros:
 - `com.unity.shadergraph`: recursos de Shader Graph incluidos en el proyecto.
 - Módulos de terreno, física, animación, audio, vídeo, partículas y XR.
 
-El repositorio también contiene recursos de terceros/importados, entre ellos
-AllSkyFree, Simple Water Shader, Modular Fantasy Bridges, SimplePoly City,
-YughuesFreePavementsMaterials, Adobe Substance 3D y Starter Assets. Estos
+El repositorio también contiene recursos de terceros/importados, entre ellos Polytope Studio (asset principal para árboles, detalles del terrain, etc.), 
+AllSkyFree (skybox), Simple Water Shader (dentro de IgniteCoders para el agua), Modular Fantasy Bridges (para el puente), SimplePoly City (elementos decorativos de ciudad: coches, sillas, carteles, luces, etc.),
+YughuesFreePavementsMaterials (pavimentos diferentes para el terreno), Adobe Substance 3D y Starter Assets. Estos
 recursos aportan modelos, materiales, shaders, escenas de demostración y
 herramientas; no todos forman parte de la escena principal.
 
@@ -302,35 +271,26 @@ ProjectSettings/
 Packages/
 ```
 
-## Limitaciones y tareas recomendadas
+## Limitaciones
 
-Estas observaciones se deducen de la configuración actual:
+Según la configuración actual:
 
 1. **Build Settings:** la escena principal del entorno no está configurada como
    escena de build. Hay que añadir `SampleScene.unity` y retirar o reordenar la
    escena de ejemplo si se quiere generar el juego directamente.
-2. **Punto de entrada:** el producto aparece configurado como
-   `Clase_1_Prefab`, con versión `0.1.0` y compañía `DefaultCompany`; conviene
-   actualizar estos valores antes de distribuirlo.
-3. **Input del jugador:** existe un mapa de acciones amplio, pero en la escena
-   no se ha identificado un controlador propio de movimiento del jugador dentro
-   de los scripts de `_MisCosas`. Conviene verificar en Unity que el prefab del
-   jugador tenga correctamente enlazados el controlador y el asset de input.
-4. **NavMesh:** si se modifica el terreno, el puente o las posiciones de NPC,
+
+2. **NavMesh:** si se modifica el terreno, el puente o las posiciones de NPC,
    hay que volver a hornear las superficies `NavMeshZone` y
    `NavMeshZone_parking`.
-5. **Calidad y rendimiento:** la escena contiene muchas instancias de
-   elementos modulares, vegetación, agua, vehículos y NPCs. Antes de una build
-   final conviene revisar LOD, sombras, oclusión, resolución de texturas y
-   perfiles PC/móvil.
-6. **Scripts de prueba:** `NewEmptyCSharpScript.cs` y `primer_script.cs` están
-   vacíos; pueden conservarse como material didáctico o eliminarse si ya no se
-   necesitan.
+3. **Calidad y rendimiento:** la escena contiene muchas instancias de
+   elementos modulares, vegetación, agua, vehículos y NPCs. En el PC de prueba el rendimiento era bueno.
+4. **Scripts de prueba:** Hay elementos no relevantes de pruebas anteriores en el proyecto: `NewEmptyCSharpScript.cs`, `primer_script.cs`, etc. 
 
-## Licencias y procedencia
 
-El proyecto mezcla recursos propios con assets de terceros. Antes de publicar
-una build fuera del entorno académico hay que revisar las licencias incluidas
-por cada paquete y asset, especialmente los contenidos de AllSkyFree,
-Mixamo, Starter Assets, Adobe Substance, SimplePoly City, Modular Fantasy
-Bridges, Yughues y el shader de agua.
+## Problemas y dificultades encontradas
+
+Durante el desarrollo surgieron varias dificultades. La configuración inicial de Unity y la importación de assets de diferentes paquetes requirieron revisar materiales, prefabs y compatibilidad con URP. La integración del personaje de Mixamo implicó configurar correctamente las animaciones y la cámara de tercera persona.
+
+El puente se ha intentado construir con los materiales disponibles y ajustando cada objeto de manera que se ajustara a la forma del puente. Se ha tratado de reconstruir de una manera fidedigna aunque es un proceso complicado.
+
+La navegación de los NPCs también requirió hornear manualmente los NavMesh y ajustar sus superficies para que pudieran desplazarse por el terreno, el puente y el parking. Además, fue necesario controlar los destinos aleatorios para evitar que los NPCs quedaran fuera de las zonas navegables.
